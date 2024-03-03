@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:web_responsive/context_extension.dart';
+import 'package:web_responsive/app/extensions/context_extension.dart';
 import 'dart:math' as math;
 
 typedef ItemAppbar = ({String text, GestureTapCallback onTap});
