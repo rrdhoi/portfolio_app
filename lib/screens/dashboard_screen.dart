@@ -3,16 +3,19 @@ import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
-import 'package:web_responsive/app/app_colors.dart';
 import 'package:web_responsive/app/extensions/context_extension.dart';
-import 'package:web_responsive/app/extensions/figma_extension.dart';
-import 'package:web_responsive/home_screen.dart';
 
-import 'components/home_background.dart';
+import 'components/about_section.dart';
+import 'components/articles_screen.dart';
+import 'components/experiences_section.dart';
+import 'components/hero_section.dart';
+import 'components/project_section.dart';
 
 class FontsStyle {
   static TextStyle defaultFont() => GoogleFonts.inter();
 }
+
+typedef ItemAppbar = ({String text, GestureTapCallback onTap});
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -49,6 +52,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   final List<Widget> _listContent = [
     const HeroSection(),
     const AboutMeSection(),
+    const ExperiencesSection(),
+    const ProjectSection(),
+    const ArticlesScreen(),
   ];
 
   @override
@@ -124,314 +130,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               )
               .toList(),
-        ],
-      ),
-    );
-  }
-}
-
-class HeroSection extends StatelessWidget {
-  const HeroSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: context.isLargerThan(MOBILE) ? 90 : 32,
-        horizontal: 32,
-      ),
-      child: MaxWidthBox(
-        maxWidth: 1100,
-        child: ResponsiveRowColumn(
-          columnMainAxisAlignment: MainAxisAlignment.center,
-          columnSpacing: 32,
-          rowMainAxisAlignment: MainAxisAlignment.spaceBetween,
-          layout: context.isLargerThan(MOBILE)
-              ? ResponsiveRowColumnType.ROW
-              : ResponsiveRowColumnType.COLUMN,
-          children: [
-            if (context.isMobile())
-              ResponsiveRowColumnItem(
-                rowFlex: 2,
-                columnOrder: 1,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                      maxHeight: context.isLargerThan(MOBILE) ? 380 : 300),
-                  child: Container(
-                    width: 300,
-                    height: 300,
-                    color: Colors.yellow,
-                  ),
-                ),
-              ),
-            ResponsiveRowColumnItem(
-              rowFlex: 3,
-              columnOrder: 2,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        "Hi, Saya ridhoi",
-                        style: FontsStyle.defaultFont()
-                            .copyWith(fontWeight: FontWeight.w900),
-                        textScaleFactor: context.titleScaleFactor,
-                      ),
-                      const Gap(8),
-                      Container(width: 72, height: 72, color: Colors.blue),
-                    ],
-                  ),
-                  const Gap(16),
-                  Text(
-                    "Descriptions",
-                    style: FontsStyle.defaultFont(),
-                  ),
-                ],
-              ),
-            ),
-            ResponsiveRowColumnItem(
-              rowFlex: 2,
-              columnOrder: 1,
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                    maxHeight: context.isLargerThan(MOBILE) ? 380 : 300),
-                child: Container(
-                  width: 300,
-                  height: 300,
-                  color: Colors.blueGrey,
-                ),
-              ),
-            ),
-            // ResponsiveRowColumnItem(
-            //   rowFlex: 5,
-            //   columnOrder: 2,
-            //   child: _leftLayout(context),
-            // ),
-            // ResponsiveRowColumnItem(
-            //   rowFlex: 4,
-            //   columnOrder: 1,
-            //   child: _rightLayout(context),
-            // ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class AboutMeSection extends StatelessWidget {
-  const AboutMeSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BaseContainer(
-      backgroundColor: Colors.white,
-      child: Column(
-        children: [
-          Text(
-            "Super Cepat dan\nMeningkatkan Produktivitas",
-            style: FontsStyle.defaultFont().copyWith(
-                fontWeight: FontWeight.w900,
-                fontSize: context.responsive(large: 42, mobile: 28),
-                height: 1.65,
-            ),
-          ),
-          const Gap(50),
-          ResponsiveRowColumn(
-            rowMainAxisSize: MainAxisSize.max,
-            columnMainAxisSize: MainAxisSize.max,
-            columnSpacing: 24,
-            rowSpacing: 24,
-            layout: context.isLargerThan(MOBILE)
-                ? ResponsiveRowColumnType.ROW
-                : ResponsiveRowColumnType.COLUMN,
-            children: [
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                child: Container(
-                  height: 550,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      color: AppColors.greyBackground,
-                      boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withOpacity(0.1),
-                        offset: const Offset(0, 13),
-                        blurRadius: 70,
-                      ),
-                    ]
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(36, 64, 36, 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Tervalidasi",
-                          style: FontsStyle.defaultFont().copyWith(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const Gap(13),
-                        Text(
-                          "eFaktur yang diinput akan segera mendapatkan validasi langsung dari server DJP dalam sistem.",
-                          textAlign: TextAlign.center,
-                          style: FontsStyle.defaultFont().copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            height: 28.8.toFigmaHeight(16),
-                          ),
-                        ),
-                        const Gap(26),
-                        Expanded(
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxHeight: 500,
-                              minWidth: context.screenWidth,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.blueGrey.shade300,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                child: Container(
-                  height: 550,
-                  decoration:  BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    color: AppColors.greyBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withOpacity(0.1),
-                        offset: const Offset(0, 13),
-                        blurRadius: 70,
-                      ),
-                    ]
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(36, 64, 36, 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Tervalidasi",
-                          style: FontsStyle.defaultFont().copyWith(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const Gap(13),
-                        Text(
-                          "eFaktur yang diinput akan segera mendapatkan validasi langsung dari server DJP dalam sistem.",
-                          textAlign: TextAlign.center,
-                          style: FontsStyle.defaultFont().copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            height: 28.8.toFigmaHeight(16),
-                          ),
-                        ),
-                        const Gap(26),
-                        Expanded(
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxHeight: 500,
-                              minWidth: context.screenWidth,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.greenAccent.shade200,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              ResponsiveRowColumnItem(
-                rowFit: FlexFit.tight,
-                child: Container(
-                  height: 550,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    color: AppColors.greyBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.shadow.withOpacity(0.1),
-                        offset: const Offset(0, 13),
-                        blurRadius: 70,
-                      ),
-                    ]
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(36, 64, 36, 0),
-                    child: Column(
-                      children: [
-                        Text(
-                          "Tervalidasi",
-                          style: FontsStyle.defaultFont().copyWith(
-                            fontSize: 30,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        const Gap(13),
-                        Text(
-                          "eFaktur yang diinput akan segera mendapatkan validasi langsung dari server DJP dalam sistem.",
-                          textAlign: TextAlign.center,
-                          style: FontsStyle.defaultFont().copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                            height: 28.8.toFigmaHeight(16),
-                          ),
-                        ),
-                        const Gap(26),
-                        Expanded(
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxHeight: 500,
-                              minWidth: context.screenWidth,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.amberAccent.shade200,
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(18),
-                                topRight: Radius.circular(18),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const Gap(50),
-          Container(
-            constraints: const BoxConstraints(
-              maxHeight: 480,
-              minWidth: double.infinity,
-            ),
-            decoration: const BoxDecoration(
-              color: Colors.amberAccent,
-              borderRadius: BorderRadius.all(Radius.circular(36))
-            ),
-          ),
         ],
       ),
     );
