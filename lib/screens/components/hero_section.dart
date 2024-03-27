@@ -10,6 +10,7 @@ class HeroSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.white,
       padding: EdgeInsets.symmetric(
         vertical: context.isLargerThan(MOBILE) ? 90 : 32,
         horizontal: 32,
@@ -72,9 +73,11 @@ class HeroSection extends StatelessWidget {
                 constraints: BoxConstraints(
                     maxHeight: context.isLargerThan(MOBILE) ? 380 : 300),
                 child: Container(
-                  width: 300,
-                  height: 300,
-                  color: Colors.blueGrey,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/img_profile.png'),
+                    ),
+                  ),
                 ),
               ),
             ),
